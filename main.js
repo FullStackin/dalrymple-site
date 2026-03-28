@@ -230,19 +230,22 @@ function animateCounters() {
    CONTACT FORM
 ────────────────────────────────────────────────── */
 function initContactForm() {
-  const form   = document.getElementById('contactForm');
+  const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
   if (!form) return;
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     status.className = 'form-status';
+    status.textContent = '';
 
     const firstName = form.firstName.value.trim();
-    const lastName  = form.lastName.value.trim();
-    const email     = form.email.value.trim();
+    const lastName = form.lastName.value.trim();
+    const email = form.email.value.trim();
+    const phone = form.phone.value.trim();
+    const interest = form.interest.value;
+    const message = form.message.value.trim();
 
-    // Basic validation
     if (!firstName || !lastName) {
       status.textContent = 'Please enter your full name.';
       status.classList.add('error');
@@ -255,36 +258,46 @@ function initContactForm() {
       return;
     }
 
-    // ─────────────────────────────────────────────
-    // TO CONNECT A REAL BACKEND:
-    // Replace the simulated response below with a
-    // fetch() call to your form service, e.g.:
-    //
-    //   fetch('https://formspree.io/f/YOUR_ID', {
-    //     method: 'POST',
-    //     headers: { 'Content-Type': 'application/json' },
-    //     body: JSON.stringify({
-    //       name: `${firstName} ${lastName}`,
-    //       email, phone: form.phone.value,
-    //       interest: form.interest.value,
-    //       message: form.message.value,
-    //     })
-    //   })
-    //   .then(r => r.ok ? showSuccess() : showError())
-    //   .catch(showError);
-    // ─────────────────────────────────────────────
-
-    // Simulated success for now
     const btn = form.querySelector('.form-send');
+    const originalText = btn.textContent;
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    setTimeout(() => {
-      status.textContent = `Thank you, ${firstName}! We'll be in touch soon.`;
-      form.reset();
-      btn.textContent = 'Send Message';
+    try {
+  form.querySelector('input[name="_replyto"]').value = email;
+
+const response = await fetch('https://formspree.io/f/xojpeayp', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  body: JSON.stringify({
+    firstName,
+    lastName,
+    name: `${firstName} ${lastName}`,
+    email,
+    phone,
+    interest,
+    message
+  })
+});
+
+      if (response.ok) {
+        status.textContent = `Thanks, ${firstName}. Your inquiry has been sent. We'll be in touch shortly.`;
+        status.classList.add('success');
+        form.reset();
+      } else {
+        status.textContent = 'Something went wrong. Please try again.';
+        status.classList.add('error');
+      }
+    } catch (error) {
+      status.textContent = 'Network error. Please try again in a moment.';
+      status.classList.add('error');
+    } finally {
+      btn.textContent = originalText;
       btn.disabled = false;
-    }, 1200);
+    }
   });
 }
 
