@@ -546,19 +546,22 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 80px;
-  align-items: center;
+  align-items: start;
+  min-height: 100vh;
+  padding: 120px 80px;
+  position: relative;
 }
 
-.portrait-wrap { position: relative; }
+.about-text {
+  max-width: 520px;
+}
 
 .portrait-box {
-  background: var(--navy-mid);
-  aspect-ratio: 3 / 4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+  max-height: 700px;
+}
+
+.portrait-wrap {
+  transform: translateY(40px);
 }
 
 /* Real photo: add an <img> inside .portrait-box and remove .portrait-mono */
