@@ -7,14 +7,13 @@
   <meta name="description" content="Brianna and Albert Dalrymple — Silicon Valley's premier real estate specialists. Luxury homes for discerning buyers and sellers." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Raleway:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- ═══════════════════════════════════════
-       NAVIGATION
-  ════════════════════════════════════════ -->
+  <!-- ═══ NAVIGATION ═══ -->
   <nav id="navbar">
     <div class="nav-logo">
       Dalrymple Team
@@ -29,53 +28,78 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════════════════════════
-       HERO
-  ════════════════════════════════════════ -->
+  <!-- ═══ HERO — FULL VIEWPORT CINEMATIC ═══ -->
   <section class="hero" id="home">
-    <div class="hero-arc"></div>
-    <div class="hero-arc hero-arc-2"></div>
-    <div class="hero-arc hero-arc-3"></div>
 
+    <!-- Background slides — add real images via style="background-image: url('...')" -->
+    <div class="hero-slides">
+      <div class="hero-slide active" id="slide-0"
+           style="background-image: url('Images/FatherDaughter.png');"></div>
+      <div class="hero-slide" id="slide-1"></div>
+      <div class="hero-slide" id="slide-2"></div>
+      <div class="hero-slide" id="slide-3"></div>
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <!-- Centered content -->
     <div class="hero-content">
       <div class="hero-eyebrow">Silicon Valley Premier Realty</div>
-      <h1 class="hero-title">
-        Your Next Chapter<br>Begins <em>Here</em>
-      </h1>
-      <p class="hero-sub">
-        Albert and Brianna Dalrymple guide Silicon Valley's most discerning buyers
-        and sellers with integrity, expertise, and a deeply personal touch.
+
+      <h1 class="hero-name">Albert &amp; <em>Brianna</em><br>Dalrymple</h1>
+
+      <div class="hero-rotator-wrap">
+        <div class="rotator-rule"></div>
+        <div class="hero-rotator" aria-live="polite">
+          <span class="rotator-word active">Trusted Guidance</span>
+          <span class="rotator-word">White-Glove Service</span>
+          <span class="rotator-word">Strategic Marketing</span>
+          <span class="rotator-word">Local Expertise</span>
+          <span class="rotator-word">Proven Results</span>
+        </div>
+        <div class="rotator-rule"></div>
+      </div>
+
+      <p class="hero-tagline">
+        Strategic guidance, luxury presentation, and exceptional client care<br>
+        across Silicon Valley's most sought-after neighborhoods.
       </p>
+
       <div class="hero-btns">
-        <a href="#listings" class="btn-primary">Explore Listings</a>
-        <a href="#about" class="btn-ghost">Meet the Team</a>
+        <a href="#listings" class="btn-primary">View Properties</a>
+        <a href="#contact" class="btn-ghost">Get Home Valuation</a>
       </div>
     </div>
 
-    <div class="hero-visual">
-      <div class="hero-img-main">
-        <svg class="house-outline" width="340" height="300" viewBox="0 0 340 300" fill="none">
-          <path d="M170 20L320 150H280V290H60V150H20Z" stroke="white" stroke-width="1.5" fill="none"/>
-          <rect x="130" y="190" width="80" height="100" stroke="white" stroke-width="1" fill="none"/>
-          <rect x="72" y="175" width="55" height="55" stroke="white" stroke-width="0.8" fill="none"/>
-          <rect x="213" y="175" width="55" height="55" stroke="white" stroke-width="0.8" fill="none"/>
-          <line x1="170" y1="20" x2="170" y2="60" stroke="white" stroke-width="1" opacity="0.4"/>
-          <rect x="156" y="45" width="28" height="28" stroke="white" stroke-width="0.8" fill="none" opacity="0.4"/>
-        </svg>
-        <p class="hero-img-placeholder-text">Add your hero property photo here</p>
-      </div>
-      <div class="hero-img-overlay"></div>
-      <div class="hero-prop-badge">
-        <div class="badge-tag">Featured Property</div>
-        <div class="badge-addr">4821 Orchard Hill<br>Palo Alto, CA</div>
-        <div class="badge-price">$4,850,000 &nbsp;·&nbsp; 5 BD &nbsp;·&nbsp; 4.5 BA</div>
-      </div>
+    <!-- Slide dots -->
+    <div class="hero-dots">
+      <button class="hero-dot active" data-slide="0" aria-label="Slide 1"></button>
+      <button class="hero-dot" data-slide="1" aria-label="Slide 2"></button>
+      <button class="hero-dot" data-slide="2" aria-label="Slide 3"></button>
+      <button class="hero-dot" data-slide="3" aria-label="Slide 4"></button>
     </div>
+
+    <div class="scroll-hint">Scroll</div>
   </section>
 
-  <!-- ═══════════════════════════════════════
-       STATS BAR
-  ════════════════════════════════════════ -->
+  <!-- ═══ DUAL CTA SPLIT ═══ -->
+  <div class="dual-cta">
+    <div class="dual-panel left" onclick="location.href='#contact'">
+      <div class="dual-panel-tag">Home Owners</div>
+      <div class="dual-panel-title">Selling a Home?</div>
+      <div class="dual-panel-sub">Find out what your home is worth</div>
+      <div class="dual-panel-arrow">→</div>
+    </div>
+    <div class="dual-divider"></div>
+    <div class="dual-panel right" onclick="location.href='#listings'">
+      <div class="dual-panel-tag">Home Seekers</div>
+      <div class="dual-panel-title">Buying a Home?</div>
+      <div class="dual-panel-sub">Browse exclusive Silicon Valley properties</div>
+      <div class="dual-panel-arrow">→</div>
+    </div>
+  </div>
+
+  <!-- ═══ STATS BAR ═══ -->
   <div class="stats-bar">
     <div class="stat-item">
       <span class="stat-num" data-target="2.4">0</span>
@@ -95,34 +119,13 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════
-       FEATURED LISTINGS
-  ════════════════════════════════════════ -->
-  <section class="listings-section" id="listings">
-    <div class="listings-head">
-      <div>
-        <div class="sec-tag">Curated Selection</div>
-        <h2 class="sec-title">Featured <em>Properties</em></h2>
-      </div>
-      <a href="#contact" class="view-all">View All Listings →</a>
-    </div>
-
-    <div class="listings-grid" id="listingsGrid">
-      <!-- Cards injected by main.js -->
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════
-       ABOUT
-  ════════════════════════════════════════ -->
+  <!-- ═══ ABOUT ═══ -->
   <section class="about-section" id="about">
-    <div class="portrait-wrap">
-      <div class="portrait-box">
-        
-<img src="Images/FatherDaughter.png" alt="Albert and Brianna Dalrymple" />      
-      </div>
+    <div class="about-photo">
+      <img src="Images/FatherDaughter.png" alt="Albert and Brianna Dalrymple" />
+      <div class="about-photo-overlay"></div>
     </div>
-    <div class="about-text">
+    <div class="about-text fade-up">
       <div class="sec-tag">About the Team</div>
       <h2 class="sec-title">A Legacy Built on<br><em>Exceptional Service</em></h2>
       <p class="about-body">
@@ -135,50 +138,66 @@
         Together, they've helped hundreds of families find not just a house, but a home — and
         helped sellers achieve results that consistently exceed expectations.
       </p>
+      <ul class="about-credentials">
+        <li>Top-Producing Silicon Valley REALTORS®</li>
+        <li>$2.4B+ in Closed Sales</li>
+        <li>Ranked Top 1% Nationwide</li>
+        <li>18 Years Combined Experience</li>
+      </ul>
       <div class="about-rule"></div>
-      <div class="about-name">Albert &amp; Brianna Dalrymple</div>
+      <div class="about-sig">Albert &amp; Brianna Dalrymple</div>
       <div class="about-role">Silicon Valley Real Estate Specialists</div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════
-       TESTIMONIALS
-  ════════════════════════════════════════ -->
-  <section class="testimonials-section" id="testimonials">
-    <div class="sec-tag">Client Stories</div>
-    <h2 class="sec-title navy">What Our Clients <em>Say</em></h2>
-    <div class="testi-grid" id="testiGrid">
-      <!-- Cards injected by main.js -->
+  <!-- ═══ FEATURED LISTINGS ═══ -->
+  <section class="listings-section" id="listings">
+    <div class="listings-head">
+      <div>
+        <div class="sec-tag" style="color:var(--champagne);">Curated Selection</div>
+        <h2 class="sec-title" style="color:var(--navy);">Featured <em>Properties</em></h2>
+      </div>
+      <a href="#contact" class="view-all">View All Listings →</a>
     </div>
+    <div class="listings-carousel" id="listingsGrid"></div>
   </section>
 
-  <!-- ═══════════════════════════════════════
-       CONTACT
-  ════════════════════════════════════════ -->
+  <!-- ═══ TESTIMONIALS ═══ -->
+  <section class="testimonials-section" id="testimonials">
+    <div class="sec-tag">Client Stories</div>
+    <h2 class="sec-title">What Our Clients <em>Say</em></h2>
+    <div class="testi-grid" id="testiGrid"></div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
   <section class="contact-section" id="contact">
-    <svg class="contact-rings" viewBox="0 0 700 700" aria-hidden="true">
-      <circle cx="350" cy="350" r="280"/>
-      <circle cx="350" cy="350" r="200"/>
-      <circle cx="350" cy="350" r="120"/>
-    </svg>
-    <div class="contact-inner">
-      <div class="sec-tag centered">Get in Touch</div>
-      <h2 class="sec-title centered white">Let's Find Your<br><em>Dream Home</em></h2>
-      <div class="contact-divider"></div>
-      <p class="contact-sub">
-        Whether you're buying, selling, or simply exploring, we'd love to connect
-        and guide your next chapter in Silicon Valley.
-      </p>
-<form 
-
-  class="contact-form" 
-  id="contactForm" 
-  action="https://formspree.io/f/xojpeayp"
-  method="POST"
->    
-<input type="hidden" name="_replyto" value="" />
-
-<div class="form-row">
+    <div class="contact-left">
+      <div class="sec-tag white">Get in Touch</div>
+      <h2 class="sec-title white">Let's Find Your<br><em>Dream Home</em></h2>
+      <div class="contact-info">
+        <div>
+          <div class="contact-item-label">Phone</div>
+          <div class="contact-item-value">(408) 555-0100</div>
+        </div>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value">hello@dalrympleteam.com</div>
+        </div>
+        <div>
+          <div class="contact-item-label">Office</div>
+          <div class="contact-item-value">Realty One Group Infinity<br>Silicon Valley, CA</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <div class="sec-tag">Send a Message</div>
+      <h2 class="sec-title white" style="font-size:clamp(26px,3vw,40px); margin-bottom:36px;">
+        How Can We<br><em>Help You?</em>
+      </h2>
+      <form class="contact-form" id="contactForm"
+            action="https://formspree.io/f/xojpeayp" method="POST">
+        <input type="hidden" name="_replyto" value="" />
+        <div class="form-row">
           <input class="form-field" type="text" name="firstName" placeholder="First Name" required />
           <input class="form-field" type="text" name="lastName" placeholder="Last Name" required />
         </div>
@@ -200,15 +219,13 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════
-       FOOTER
-  ════════════════════════════════════════ -->
+  <!-- ═══ FOOTER ═══ -->
   <footer>
     <div class="foot-logo">
       Dalrymple Team
       <span>Realty One Group Infinity</span>
     </div>
-    <nav class="foot-links" aria-label="Footer navigation">
+    <nav class="foot-links">
       <a href="#listings">Properties</a>
       <a href="#about">About</a>
       <a href="#testimonials">Testimonials</a>
@@ -216,6 +233,8 @@
     </nav>
     <div class="foot-copy">© 2025 Dalrymple Team. All rights reserved.</div>
   </footer>
+
+
 
   <script src="main.js"></script>
 </body>
