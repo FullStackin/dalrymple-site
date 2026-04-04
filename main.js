@@ -47,13 +47,17 @@ function houseSVG() {
 function renderTestimonials() {
   const grid = document.getElementById('testiGrid');
   if (!grid) return;
-  grid.innerHTML = testimonials.map((t) => `
+
+  const allTestimonials = [...testimonials, ...testimonials]; // duplicate for loop
+
+  grid.innerHTML = allTestimonials.map((t) => `
     <div class="testi-card fade-up">
       <div class="testi-stars">${'★'.repeat(t.stars)}</div>
       <span class="testi-quote-mark">"</span>
       <p class="testi-text">${t.text}</p>
       <div class="testi-author">${t.author}</div>
-    </div>`).join('');
+    </div>
+  `).join('');
 }
 
 /* ── HERO SLIDESHOW ── */
