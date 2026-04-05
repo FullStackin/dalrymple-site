@@ -988,7 +988,7 @@ footer {
 }
 @media (max-width: 768px) {
   .sticky-val { display: block; }
-  .sticky-val.visible a { tabindex: 0; }
+  .sticky-val.visible a { tab index: 0; }
 }
 
 /* ══════════════════════════════════════════════════
