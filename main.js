@@ -556,12 +556,12 @@ function animateCounters() {
           // FIX: prefix $ on every frame, not just final
           el.textContent = integer
             ? Math.floor(v) + "+"
-            : "$" + v.toFixed(1) + "B+";
+            : "$" + v.toFixed(1) + "M+";
 
           if (p < 1) {
             requestAnimationFrame(tick);
           } else {
-            el.textContent = integer ? target + "+" : "$" + target + "B+";
+            el.textContent = integer ? target + "+" : "$" + target + "M+";
           }
         }
         requestAnimationFrame(tick);
