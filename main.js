@@ -6,87 +6,70 @@
 
 const activeListings = [
   {
-    tag: "Featured",
-    address: "4821 Orchard Hill",
-    city: "Palo Alto, CA",
-    price: "$4,850,000",
-    beds: 5,
-    baths: 4.5,
-    sqft: "4,200",
+    tag: "Active · Commercial",
+    address: "Sierra Nevada Ranch",
+    city: "Exeter (Yokohl Valley), CA",
+    price: "$6,500,000",
+    desc: "~3,000-acre breathtaking cattle & recreational ranch in the western Sierra Nevada foothills. Modular home 1,850 sq ft, 3 bed/2 bath, 8 ponds, 4 pastures, 100-ton barn. One of the finest recreational ranches in the Sierras.",
     bgClass: "bg-a",
+    image: "Images/house2.webp",
   },
   {
-    tag: "New",
-    address: "2970 Hillcrest Dr",
-    city: "Los Altos Hills, CA",
-    price: "$6,200,000",
-    beds: 6,
-    baths: 5,
-    sqft: "5,800",
+    tag: "Active · Commercial",
+    address: "Redwood Rental & Repair",
+    city: "Redwood City, CA 94063",
+    price: "$1,800,000",
+    desc: "Established equipment rental business serving Mid-Peninsula contractors since 1987. Full-service yard catering to homeowners, landscapers, and large general contractors. Land leased at $10,500/mo long term.",
     bgClass: "bg-b",
+    image: "Images/house.jpg",
   },
   {
-    tag: "Just Listed",
-    address: "1103 Heritage Ln",
-    city: "Saratoga, CA",
-    price: "$3,475,000",
-    beds: 4,
-    baths: 3.5,
-    sqft: "3,100",
+    tag: "Active · Commercial",
+    address: "Oakland Rentals — Business & Property",
+    city: "Oakland, CA",
+    price: "$3,000,000",
+    desc: "Equipment rental yard serving Alameda County contractors and homeowners for 32+ years. Offered together: business/equipment assets ($1.5M) plus land and building ($1.5M). Full-service operation.",
     bgClass: "bg-c",
+    image: "Images/kitchen.webp",
   },
   {
-    tag: "Price Reduced",
-    address: "756 Magnolia Ave",
-    city: "Menlo Park, CA",
-    price: "$2,995,000",
-    beds: 4,
-    baths: 3,
-    sqft: "2,800",
+    tag: "Active · Commercial",
+    address: "Liquid Organic Fertilizer Co.",
+    city: "Fresno County, CA",
+    price: "$4,500,000",
+    desc: "20+ year operation serving local farmers in the heart of California's agriculture region. ~20 acres, turnkey with employees, equipment, inventory, and land. Tapping into an $88.1B market by 2028.",
     bgClass: "bg-d",
+    image: "Images/bathroom.jpg",
   },
 ];
 
 const soldListings = [
   {
     tag: "Sold",
-    address: "892 Rinconada Ave",
-    city: "Palo Alto, CA",
-    price: "$5,620,000",
-    beds: 5,
-    baths: 4,
-    sqft: "3,980",
+    address: "3129 Irlanda Way",
+    city: "San Jose, CA 95124",
+    price: "$1,300,000",
+    desc: "3 bed / 1 bath · 1,060 sq ft · 5,100 sq ft lot. Built 1954. Cambrian Elementary School District. Central AC, fireplace, modern appliances. Sold representing sellers with full marketing plan.",
     bgClass: "bg-b",
+    image: "Images/house.jpg",
   },
   {
     tag: "Sold",
-    address: "14 Stonebrook Ct",
-    city: "Atherton, CA",
-    price: "$9,100,000",
-    beds: 6,
-    baths: 6,
-    sqft: "7,200",
+    address: "336 Wilmington Court",
+    city: "Brentwood, CA 94513",
+    price: "$855,000",
+    desc: "3 bed / 2.5 bath · 2,108 sq ft · 6,500 sq ft lot. Built 2017. Open-concept chef's kitchen, spa-like primary suite, RV access. Walk to top-rated elementary school and scenic park.",
     bgClass: "bg-a",
+    image: "Images/house2.webp",
   },
   {
-    tag: "Sold",
-    address: "441 Pepper Ave",
-    city: "Los Altos, CA",
-    price: "$4,250,000",
-    beds: 4,
-    baths: 3.5,
-    sqft: "3,400",
+    tag: "Sold · Commercial",
+    address: "Quarry Mining — Granite, DG & Shale",
+    city: "Central California",
+    price: "SOLD",
+    desc: "~318 acres / two APNs. Hard rock granite, decomposed granite, shale, quartz, sand. ~30M ton reserves. Past buyer: Granite Construction. Ideal for CA High Speed Rail & Hwy 41 projects.",
     bgClass: "bg-c",
-  },
-  {
-    tag: "Sold",
-    address: "278 Summit Dr",
-    city: "Saratoga, CA",
-    price: "$3,800,000",
-    beds: 4,
-    baths: 3,
-    sqft: "3,100",
-    bgClass: "bg-d",
+    image: "Images/kitchen.webp",
   },
 ];
 
@@ -115,28 +98,36 @@ const testimonials = [
 
 const soldStories = [
   {
-    location: "Los Altos Hills, CA",
-    result: "Listed at $5.2M · Sold at $5.78M in 9 Days",
+    location: "San Jose, CA — 3129 Irlanda Way",
+    result: "Sold · $1,300,000",
     story:
-      "We received 6 offers in the first weekend. Albert's staging strategy and Brianna's outreach to off-market buyer lists created a bidding environment that netted our clients $580,000 above asking — without a single price reduction.",
-    highlight: "+$580K",
-    highlightLabel: "Above Asking",
+      "A well-presented 3-bedroom home in the heart of the Cambrian district. Albert's step-by-step marketing plan and deep buyer network delivered a smooth, full-price close — turning a family home into generational equity.",
+    highlight: "$1.3M",
+    highlightLabel: "Closed Sales Price",
   },
   {
-    location: "Palo Alto, CA",
-    result: "Sold in 4 Days — Multiple Offers",
+    location: "Brentwood, CA — 336 Wilmington Court",
+    result: "Sold · $855,000",
     story:
-      "A targeted pre-market campaign reached 340 qualified buyers before the first public showing. The property sold in a competitive 7-offer situation at 108% of list price, giving the sellers the confidence and certainty they needed.",
-    highlight: "108%",
-    highlightLabel: "Of List Price",
+      "Modern 3-bed, 2.5-bath home built in 2017. Targeted marketing spotlighting the open-concept chef's kitchen, spa-like suite, and RV access drove strong buyer interest and a swift, clean close.",
+    highlight: "$855K",
+    highlightLabel: "Closed Sales Price",
   },
   {
-    location: "Saratoga, CA",
-    result: "Off-Market Purchase — Never Hit MLS",
+    location: "Exeter, CA — Sierra Nevada Ranch",
+    result: "Active · Listed $6,500,000",
     story:
-      "Our buyer clients had searched for 14 months with no success. Within 6 weeks of engaging the Dalrymple Team, we matched them with an off-market property that perfectly fit their criteria — before any other buyers had access.",
-    highlight: "6 Weeks",
-    highlightLabel: "To Off-Market Close",
+      "A breathtaking 3,000-acre cattle and recreational ranch nestled in the Yokohl Valley — a true gem of the Sierras. Eight ponds, four pastures, diverse wildlife, and movie-location potential. Proof that the Dalrymple Team operates at every scale.",
+    highlight: "3,000 ac.",
+    highlightLabel: "Landmark Listing",
+  },
+  {
+    location: "Central California — Quarry Mining Property",
+    result: "Sold · Commercial",
+    story:
+      "318-acre hard rock quarry with ~30 million ton reserves. Past purchaser: Granite Construction. Strategically positioned near the California High Speed Rail corridor and Hwy 41 reconstruction — a landmark commercial close.",
+    highlight: "30M Tons",
+    highlightLabel: "Reserve Capacity",
   },
 ];
 
@@ -197,21 +188,27 @@ function buildListingCard(l) {
     ? `style="background-image:url('${l.image}');background-size:cover;background-position:center;"`
     : "";
 
+  const metaHTML = l.desc
+    ? `<p class="lc-desc">${l.desc}</p>`
+    : `<div class="lc-meta" aria-label="Property details">
+          <span>${l.beds} BD</span>
+          <span>${l.baths} BA</span>
+          <span>${l.sqft} SF</span>
+        </div>`;
+
   return `
     <article class="listing-card fade-up" role="listitem">
-      <div class="lc-bg ${l.bgClass}" ${bgStyle}>
-        ${!l.image ? HOUSE_SVG : ""}
+      <div class="lc-media">
+        <div class="lc-bg ${l.bgClass}" ${bgStyle}>
+          ${!l.image ? HOUSE_SVG : ""}
+        </div>
       </div>
-      <div class="lc-overlay" aria-hidden="true"></div>
+
       <div class="lc-content">
         <span class="lc-tag">${l.tag}</span>
         <h3 class="lc-addr">${l.address}<br><span style="font-size:0.8em;opacity:0.75;">${l.city}</span></h3>
         <div class="lc-price">${l.price}</div>
-        <div class="lc-meta" aria-label="Property details">
-          <span>${l.beds} BD</span>
-          <span>${l.baths} BA</span>
-          <span>${l.sqft} SF</span>
-        </div>
+        ${metaHTML}
         <a href="#contact" class="lc-cta" aria-label="Schedule a showing for ${l.address}">Schedule Showing →</a>
       </div>
     </article>`;
@@ -538,40 +535,50 @@ function initScrollAnimations() {
 function animateCounters() {
   const counters = document.querySelectorAll(".stat-num[data-target]");
 
+  function runCounter(el) {
+    const target = parseFloat(el.dataset.target);
+    const integer = el.dataset.integer === "true";
+    const dur = 1800;
+    const start = performance.now();
+
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      const e = 1 - Math.pow(1 - p, 3); // ease-out cubic
+      const v = e * target;
+
+      el.textContent = integer
+        ? Math.floor(v) + "+"
+        : "$" + v.toFixed(1) + "M+";
+
+      if (p < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = integer ? target + "+" : "$" + target + "M+";
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
   const obs = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        const el = entry.target;
-        const target = parseFloat(el.dataset.target);
-        const integer = el.dataset.integer === "true";
-        const dur = 1800;
-        const start = performance.now();
-
-        function tick(now) {
-          const p = Math.min((now - start) / dur, 1);
-          const e = 1 - Math.pow(1 - p, 3); // ease-out cubic
-          const v = e * target;
-
-          // FIX: prefix $ on every frame, not just final
-          el.textContent = integer
-            ? Math.floor(v) + "+"
-            : "$" + v.toFixed(1) + "M+";
-
-          if (p < 1) {
-            requestAnimationFrame(tick);
-          } else {
-            el.textContent = integer ? target + "+" : "$" + target + "M+";
-          }
-        }
-        requestAnimationFrame(tick);
-        obs.unobserve(el);
+        runCounter(entry.target);
+        obs.unobserve(entry.target);
       });
     },
-    { threshold: 0.5 },
+    { threshold: 0.05, rootMargin: "0px 0px 0px 0px" },
   );
 
-  counters.forEach((c) => obs.observe(c));
+  counters.forEach((c) => {
+    // If already visible (above fold or small page), fire immediately
+    const rect = c.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      runCounter(c);
+    } else {
+      obs.observe(c);
+    }
+  });
 }
 
 /* ══════════════════════════════════════════════════
@@ -658,7 +665,8 @@ function initContactForm() {
         status.classList.add("error");
       }
     } catch {
-      status.textContent = "Network error. Please call us at (408) 555-0100.";
+      status.textContent =
+        "Network error. Please call Albert at (408) 723-0186.";
       status.classList.add("error");
     } finally {
       btn.textContent = "Send Message";
