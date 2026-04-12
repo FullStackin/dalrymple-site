@@ -1,0 +1,25 @@
+# ══════════════════════════════════════════════
+#  DALRYMPLE TEAM — .gitignore
+# ══════════════════════════════════════════════
+
+# API keys — NEVER commit this file
+config.js
+
+# OS clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (if ever added)
+node_modules/
+npm-debug.log*
+
+# Build output (if ever added)
+dist/
+build/

@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Property Search | Dalrymple Team · Silicon Valley Luxury Real Estate</title>
+  <meta name="description" content="Search Silicon Valley luxury homes for sale. Interactive map search with filters. Dalrymple Team · Realty One Group Infinity." />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230B1A2F'/><text y='.9em' font-size='72' x='50%' text-anchor='middle' font-family='Georgia,serif' fill='%23C8A96E'>D</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
+  <style>
+    :root {
+      --navy:#0b1a2f; --navy-mid:#122240; --navy-deep:#07111e;
+      --champagne:#c8a96e; --champ-light:#e2cc9a; --champ-pale:#f4ecd8;
+      --white:#ffffff; --offwhite:#f8f5ef; --slate:#7a8fa8; --text-mid:#3d5068;
+      --serif:"Cormorant Garamond",Georgia,serif;
+      --sans:"Montserrat","Segoe UI",sans-serif;
+      --ease:cubic-bezier(0.25,0.46,0.45,0.94);
+      --nav-h:72px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{font-size:16px;}
+    body{
+      font-family:var(--sans);background:var(--navy-deep);
+      color:var(--navy);overflow:hidden;line-height:1.6;
+      height:100dvh;display:flex;flex-direction:column;
+    }
+    a{text-decoration:none;color:inherit;}
+    img{max-width:100%;display:block;}
+    button{cursor:pointer;font-family:var(--sans);}
+
+    /* ── NAVBAR ── */
+    #navbar{
+      position:fixed;top:0;left:0;right:0;z-index:200;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 60px;height:var(--nav-h);
+      background:var(--navy-deep);
+      border-bottom:0.5px solid rgba(200,169,110,0.14);
+      flex-shrink:0;
+    }
+    .nav-logo{font-family:var(--serif);font-size:20px;font-weight:300;letter-spacing:0.12em;color:var(--white);line-height:1;}
+    .nav-logo span{display:block;font-family:var(--sans);font-size:7.5px;font-weight:300;letter-spacing:0.42em;text-transform:uppercase;color:var(--champagne);margin-top:3px;}
+    .nav-links{display:flex;gap:36px;align-items:center;}
+    .nav-links a{font-size:9.5px;font-weight:400;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.55);transition:color .25s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--champ-light);}
+    .nav-links .nav-cta{border:0.5px solid rgba(200,169,110,0.5);color:var(--champ-light);padding:9px 22px;}
+    .nav-links .nav-cta:hover{background:rgba(200,169,110,0.08);}
+    .nav-toggle{display:none;background:none;border:none;color:var(--white);font-size:22px;padding:4px;}
+
+    /* ── FILTER PANEL ── */
+    #filterPanel{
+      position:fixed;top:var(--nav-h);left:0;right:0;z-index:150;
+      background:var(--navy-mid);
+      border-bottom:0.5px solid rgba(200,169,110,0.14);
+      transition:transform .35s var(--ease);
+    }
+    #filterPanel.collapsed{transform:translateY(calc(-100% + 46px));}
+    .ftoggle{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 40px;height:46px;cursor:pointer;
+      border-bottom:0.5px solid rgba(200,169,110,0.07);
+      user-select:none;
+    }
+    .ftoggle-label{font-size:8.5px;letter-spacing:0.36em;text-transform:uppercase;color:var(--champagne);display:flex;align-items:center;gap:10px;}
+    .ftoggle-label::before{content:'';width:18px;height:0.5px;background:var(--champagne);}
+    .ftoggle-icon{font-size:11px;color:var(--slate);transition:transform .3s var(--ease);}
+    #filterPanel.collapsed .ftoggle-icon{transform:rotate(180deg);}
+    .fbody{padding:20px 40px 16px;}
+    .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr 1fr;gap:10px;align-items:end;margin-bottom:14px;}
+    .ffield{display:flex;flex-direction:column;gap:5px;}
+    .flabel{font-size:7.5px;font-weight:400;letter-spacing:0.38em;text-transform:uppercase;color:var(--champagne);}
+    .finput,.fselect{
+      width:100%;background:rgba(255,255,255,0.04);
+      border:0.5px solid rgba(200,169,110,0.2);
+      color:var(--white);font-family:var(--sans);font-size:11px;font-weight:300;letter-spacing:0.03em;
+      padding:9px 13px;outline:none;
+      transition:border-color .25s,background .25s;
+      appearance:none;-webkit-appearance:none;border-radius:0;
+    }
+    .finput::placeholder{color:rgba(255,255,255,0.22);}
+    .finput:focus,.fselect:focus{border-color:rgba(200,169,110,0.55);background:rgba(255,255,255,0.06);}
+    .fselect{
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='5' fill='none'%3E%3Cpath d='M1 1l3.5 3.5L8 1' stroke='%23c8a96e' stroke-width='1'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 11px center;
+      padding-right:28px;cursor:pointer;
+    }
+    .fselect option{background:var(--navy-mid);color:var(--white);}
+    .factions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:0.5px solid rgba(200,169,110,0.08);}
+    .btn-search{
+      font-family:var(--sans);font-size:8px;font-weight:400;letter-spacing:0.3em;text-transform:uppercase;
+      background:var(--champagne);color:var(--navy-deep);border:none;padding:11px 26px;
+      transition:background .25s,transform .2s;flex-shrink:0;
+    }
+    .btn-search:hover{background:var(--champ-light);transform:translateY(-1px);}
+    .btn-reset{
+      font-family:var(--sans);font-size:8px;letter-spacing:0.25em;text-transform:uppercase;
+      background:none;border:0.5px solid rgba(200,169,110,0.22);
+      color:rgba(255,255,255,0.38);padding:11px 20px;
+      transition:color .25s,border-color .25s;flex-shrink:0;
+    }
+    .btn-reset:hover{color:var(--champ-light);border-color:rgba(200,169,110,0.5);}
+    .pills{display:flex;gap:5px;flex-wrap:wrap;flex:1;min-width:0;}
+    .pill{
+      display:flex;align-items:center;gap:4px;
+      font-size:7.5px;letter-spacing:0.16em;text-transform:uppercase;
+      color:var(--champagne);border:0.5px solid rgba(200,169,110,0.25);
+      padding:3px 9px;background:rgba(200,169,110,0.04);white-space:nowrap;
+    }
+    .pill button{background:none;border:none;color:rgba(200,169,110,0.45);font-size:10px;padding:0;line-height:1;transition:color .2s;}
+    .pill button:hover{color:var(--champagne);}
+    .rcount{margin-left:auto;white-space:nowrap;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--slate);}
+    .rcount strong{color:var(--champagne);font-weight:400;}
+    .sort-wrap{display:flex;align-items:center;gap:7px;flex-shrink:0;}
+    .sort-label{font-size:7.5px;letter-spacing:0.28em;text-transform:uppercase;color:var(--slate);white-space:nowrap;}
+    .sort-sel{
+      background:none;border:0.5px solid rgba(200,169,110,0.16);
+      color:rgba(255,255,255,0.5);font-family:var(--sans);font-size:9px;font-weight:300;
+      padding:5px 24px 5px 9px;outline:none;appearance:none;-webkit-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4' fill='none'%3E%3Cpath d='M1 1l2.5 2.5L6 1' stroke='%237a8fa8' stroke-width='1'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;background-position:right 8px center;
+      cursor:pointer;border-radius:0;
+    }
+    .sort-sel option{background:var(--navy-mid);}
+    .vtoggle{display:none;gap:3px;margin-left:8px;flex-shrink:0;}
+    .vbtn{
+      font-family:var(--sans);font-size:7.5px;letter-spacing:0.2em;text-transform:uppercase;
+      background:none;border:0.5px solid rgba(200,169,110,0.2);
+      color:rgba(255,255,255,0.38);padding:7px 12px;transition:all .2s;
+    }
+    .vbtn.active{background:rgba(200,169,110,0.1);border-color:rgba(200,169,110,0.48);color:var(--champagne);}
+
+    /* ── MAIN SPLIT ── */
+    #main{
+      flex:1;display:flex;overflow:hidden;
+      /* top offset = nav + filter panel; set by JS */
+      margin-top:var(--nav-h);
+    }
+
+    /* ── CARDS PANEL ── */
+    #cardsPanel{
+      width:460px;flex-shrink:0;
+      overflow-y:auto;background:var(--offwhite);
+      scrollbar-width:thin;scrollbar-color:rgba(200,169,110,0.18) transparent;
+      position:relative;z-index:10;
+    }
+    #cardsPanel::-webkit-scrollbar{width:3px;}
+    #cardsPanel::-webkit-scrollbar-thumb{background:rgba(200,169,110,0.18);}
+    .cards-inner{padding:16px 16px 60px;}
+
+    /* ── MAP PANEL ── */
+    #mapPanel{flex:1;position:relative;min-width:0;}
+    #map{position:absolute;inset:0;width:100%;height:100%;}
+
+    /* ── PROPERTY CARDS ── */
+    .res-card{
+      background:var(--white);
+      border:1px solid rgba(200,169,110,0.1);
+      margin-bottom:2px;cursor:pointer;
+      transition:box-shadow .25s var(--ease),border-color .25s;
+      opacity:0;transform:translateY(10px);
+      animation:cardIn .45s var(--ease) forwards;
+    }
+    @keyframes cardIn{to{opacity:1;transform:translateY(0);}}
+    .res-card:last-child{margin-bottom:0;}
+    .res-card:hover{box-shadow:0 10px 32px rgba(11,26,47,0.12);}
+    .res-card.active{border-color:var(--champagne);border-left-width:3px;box-shadow:0 10px 32px rgba(11,26,47,0.15);}
+    .res-img-wrap{position:relative;overflow:hidden;aspect-ratio:16/9;background:var(--navy-mid);}
+    .res-img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);}
+    .res-card:hover .res-img{transform:scale(1.03);}
+    .res-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy-mid),var(--navy-deep));}
+    .res-ph svg{opacity:.07;}
+    .res-badge{
+      position:absolute;top:12px;left:12px;
+      font-size:7.5px;letter-spacing:0.34em;text-transform:uppercase;
+      font-family:var(--sans);font-weight:400;
+      background:var(--champagne);color:var(--navy-deep);padding:3px 10px;
+    }
+    .res-badge.sold{background:rgba(7,17,30,0.85);color:var(--champagne);border:0.5px solid rgba(200,169,110,0.5);}
+    .res-pct{position:absolute;bottom:10px;right:12px;font-size:8px;letter-spacing:0.08em;color:rgba(255,255,255,0.7);background:rgba(0,0,0,0.4);padding:2px 8px;backdrop-filter:blur(3px);}
+    .res-body{padding:16px 18px 18px;background:var(--navy);}
+    .res-mls{font-size:7.5px;letter-spacing:0.26em;text-transform:uppercase;color:var(--slate);margin-bottom:4px;}
+    .res-addr{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--white);line-height:1.2;margin-bottom:2px;}
+    .res-city{font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--slate);margin-bottom:10px;}
+    .res-price{font-family:var(--serif);font-size:21px;font-weight:300;color:var(--champ-light);margin-bottom:8px;}
+    .res-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:8.5px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.33);margin-bottom:14px;}
+    .res-foot{display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:0.5px solid rgba(200,169,110,0.1);}
+    .res-type{font-size:7.5px;letter-spacing:0.24em;text-transform:uppercase;color:var(--champagne);border:0.5px solid rgba(200,169,110,0.26);padding:3px 8px;}
+    .res-cta{font-size:7.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--champagne);display:flex;align-items:center;gap:4px;transition:color .2s;}
+    .res-cta:hover{color:var(--champ-light);}
+    .res-cta::after{content:'→';transition:transform .2s;}
+    .res-cta:hover::after{transform:translateX(3px);}
+
+    /* ── PAGINATION ── */
+    .pagination{display:flex;align-items:center;justify-content:center;gap:3px;padding:20px 0 0;}
+    .pgbtn{font-family:var(--sans);font-size:9px;letter-spacing:0.12em;background:none;border:0.5px solid rgba(200,169,110,0.14);color:var(--slate);padding:7px 12px;transition:all .2s;min-width:36px;}
+    .pgbtn:hover{border-color:rgba(200,169,110,0.42);color:var(--champagne);}
+    .pgbtn.active{background:var(--champagne);color:var(--navy-deep);border-color:var(--champagne);font-weight:500;}
+    .pgbtn:disabled{opacity:.3;pointer-events:none;}
+
+    /* ── STATES ── */
+    .state-box{padding:56px 20px;text-align:center;}
+    .si{font-family:var(--serif);font-size:48px;color:rgba(200,169,110,0.12);line-height:1;margin-bottom:16px;}
+    .st{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--navy);margin-bottom:8px;}
+    .ss{font-size:11px;color:var(--slate);line-height:1.8;max-width:300px;margin:0 auto 18px;}
+    .sbtn{font-size:8px;letter-spacing:0.26em;text-transform:uppercase;background:var(--champagne);color:var(--navy-deep);padding:10px 24px;border:none;cursor:pointer;transition:background .25s;}
+    .sbtn:hover{background:var(--champ-light);}
+
+    /* ── SKELETON ── */
+    @keyframes sk{0%,100%{opacity:.25;}50%{opacity:.58;}}
+    .sk-card{background:var(--white);margin-bottom:2px;border:1px solid rgba(200,169,110,0.06);}
+    .sk-img{aspect-ratio:16/9;background:linear-gradient(135deg,#0e1f38,#0b1a2f);animation:sk 1.4s ease-in-out infinite;}
+    .sk-body{padding:16px 18px 18px;background:var(--navy);}
+    .sk-ln{border-radius:1px;background:rgba(200,169,110,0.09);animation:sk 1.4s ease-in-out infinite;margin-bottom:7px;}
+    .sk-s{height:8px;width:36%;}
+    .sk-m{height:15px;width:70%;}
+    .sk-l{height:19px;width:48%;margin-top:2px;}
+    .sk-x{height:7px;width:82%;}
+
+    /* ── MAPBOX OVERRIDES ── */
+    .map-marker{
+      background:var(--champagne);color:var(--navy-deep);
+      font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:0.04em;
+      padding:5px 10px;white-space:nowrap;cursor:pointer;position:relative;
+      box-shadow:0 3px 14px rgba(0,0,0,0.4);
+      transition:background .18s,transform .18s;
+    }
+    .map-marker::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--champagne);border-bottom:none;}
+    .map-marker:hover,.map-marker.mactive{background:var(--navy-deep);color:var(--champagne);transform:translateY(-2px);}
+    .map-marker.mactive::after{border-top-color:var(--navy-deep);}
+    .mapboxgl-popup-content{background:var(--navy-deep)!important;border:0.5px solid rgba(200,169,110,0.3)!important;padding:0!important;border-radius:0!important;box-shadow:0 8px 32px rgba(0,0,0,0.55)!important;min-width:210px;font-family:var(--sans)!important;}
+    .mapboxgl-popup-tip{display:none!important;}
+    .mapboxgl-popup-close-button{color:var(--slate)!important;font-size:15px!important;right:8px!important;top:6px!important;background:none!important;}
+    .pop-inner{padding:14px 16px;}
+    .pop-addr{font-family:var(--serif);font-size:14px;font-weight:300;color:var(--white);line-height:1.3;margin-bottom:3px;}
+    .pop-city{font-size:7.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--slate);margin-bottom:8px;}
+    .pop-price{font-family:var(--serif);font-size:17px;font-weight:300;color:var(--champ-light);margin-bottom:6px;}
+    .pop-meta{font-size:8px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.32);margin-bottom:10px;}
+    .pop-cta{display:block;font-size:7.5px;letter-spacing:0.26em;text-transform:uppercase;background:var(--champagne);color:var(--navy-deep);padding:8px 12px;text-align:center;transition:background .2s;}
+    .pop-cta:hover{background:var(--champ-light);}
+    .mapboxgl-ctrl-attrib{font-size:9px!important;}
+
+    /* ── SCROLL TOP ── */
+    #scrollTop{position:fixed;bottom:26px;right:26px;z-index:180;background:var(--champagne);color:var(--navy-deep);width:38px;height:38px;border:none;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;transform:translateY(5px);}
+    #scrollTop.visible{opacity:1;pointer-events:auto;transform:translateY(0);}
+    #scrollTop:hover{background:var(--champ-light);}
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:1280px){
+      .fgrid{grid-template-columns:2fr 1fr 1fr 1fr 1fr;}
+      #cardsPanel{width:420px;}
+    }
+    @media(max-width:1080px){
+      .fgrid{grid-template-columns:1fr 1fr 1fr 1fr;}
+      #cardsPanel{width:380px;}
+    }
+    @media(max-width:900px){
+      #navbar{padding:0 28px;}
+      .nav-toggle{display:block;}
+      .nav-links{display:none;position:fixed;inset:0;background:var(--navy-deep);flex-direction:column;justify-content:center;align-items:center;gap:32px;z-index:190;}
+      .nav-links.open{display:flex;}
+      .nav-links a{font-size:13px;}
+      .fgrid{grid-template-columns:1fr 1fr 1fr;}
+      .fbody{padding:16px 28px 12px;}
+      .ftoggle{padding:0 28px;}
+      #cardsPanel{width:340px;}
+    }
+    @media(max-width:768px){
+      .fgrid{grid-template-columns:1fr 1fr;}
+      .vtoggle{display:flex;}
+      .sort-wrap,.rcount{display:none;}
+      /* Full-screen toggle on mobile */
+      #main{position:relative;}
+      #cardsPanel{
+        position:absolute;inset:0;width:100%;z-index:5;
+        transition:opacity .3s,transform .3s;
+      }
+      #mapPanel{position:absolute;inset:0;z-index:4;}
+      body.show-map #cardsPanel{opacity:0;transform:translateX(-100%);pointer-events:none;}
+      body.show-map #mapPanel{z-index:6;}
+    }
+    @media(max-width:540px){
+      .fgrid{grid-template-columns:1fr;}
+      #navbar{padding:0 18px;}
+      .fbody{padding:14px 18px 10px;}
+      .ftoggle{padding:0 18px;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo">Dalrymple Team<span>Realty One Group Infinity</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <div class="nav-links" id="navLinks" role="menubar">
+      <a href="index.html#listings" role="menuitem">Properties</a>
+      <a href="search.html" class="active" role="menuitem">Search MLS</a>
+      <a href="index.html#about" role="menuitem">About Us</a>
+      <a href="index.html#testimonials" role="menuitem">Testimonials</a>
+      <a href="index.html#markets" role="menuitem">Our Markets</a>
+      <a href="index.html#contact" class="nav-cta" role="menuitem">Contact</a>
+    </div>
+  </nav>
+
+  <!-- FILTER PANEL -->
+  <div id="filterPanel" role="search" aria-label="Property search filters">
+    <div class="ftoggle" id="fToggleBar" role="button" tabindex="0" aria-expanded="true" aria-controls="fBody">
+      <span class="ftoggle-label">Search &amp; Filter Properties</span>
+      <span class="ftoggle-icon" aria-hidden="true">▲</span>
+    </div>
+    <div class="fbody" id="fBody">
+      <div class="fgrid">
+        <div class="ffield" style="grid-column:span 2">
+          <label class="flabel" for="fLoc">City or Neighborhood</label>
+          <input class="finput" id="fLoc" type="text" placeholder="e.g. Palo Alto, Saratoga, Los Gatos…" autocomplete="off" />
+        </div>
+        <div class="ffield">
+          <label class="flabel" for="fStatus">Status</label>
+          <select class="fselect" id="fStatus">
+            <option value="A">For Sale</option>
+            <option value="U">Recently Sold</option>
+          </select>
+        </div>
+        <div class="ffield">
+          <label class="flabel" for="fType">Property Type</label>
+          <select class="fselect" id="fType">
+            <option value="">Any Type</option>
+            <option value="Residential">Residential</option>
+            <option value="Condo">Condo / Townhome</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Land">Land</option>
+            <option value="Multi-Family">Multi-Family</option>
+          </select>
+        </div>
+        <div class="ffield">
+          <label class="flabel" for="fMinPrice">Min Price</label>
+          <select class="fselect" id="fMinPrice">
+            <option value="">No Min</option>
+            <option value="500000">$500K</option>
+            <option value="750000">$750K</option>
+            <option value="1000000">$1M</option>
+            <option value="1500000">$1.5M</option>
+            <option value="2000000">$2M</option>
+            <option value="3000000">$3M</option>
+            <option value="5000000">$5M</option>
+            <option value="7500000">$7.5M</option>
+          </select>
+        </div>
+        <div class="ffield">
+          <label class="flabel" for="fMaxPrice">Max Price</label>
+          <select class="fselect" id="fMaxPrice">
+            <option value="">No Max</option>
+            <option value="750000">$750K</option>
+            <option value="1000000">$1M</option>
+            <option value="1500000">$1.5M</option>
+            <option value="2000000">$2M</option>
+            <option value="3000000">$3M</option>
+            <option value="5000000">$5M</option>
+            <option value="7500000">$7.5M</option>
+            <option value="10000000">$10M</option>
+            <option value="15000000">$15M+</option>
+          </select>
+        </div>
+        <div class="ffield">
+          <label class="flabel" for="fBeds">Beds</label>
+          <select class="fselect" id="fBeds">
+            <option value="">Any</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+            <option value="5">5+</option>
+          </select>
+        </div>
+        <div class="ffield">
+          <label class="flabel" for="fBaths">Baths</label>
+          <select class="fselect" id="fBaths">
+            <option value="">Any</option>
+            <option value="1">1+</option>
+            <option value="2">2+</option>
+            <option value="3">3+</option>
+            <option value="4">4+</option>
+          </select>
+        </div>
+        <div class="ffield">
+          <label class="flabel" for="fSqft">Min Sq. Ft.</label>
+          <select class="fselect" id="fSqft">
+            <option value="">Any</option>
+            <option value="500">500+</option>
+            <option value="1000">1,000+</option>
+            <option value="1500">1,500+</option>
+            <option value="2000">2,000+</option>
+            <option value="3000">3,000+</option>
+            <option value="5000">5,000+</option>
+          </select>
+        </div>
+      </div>
+      <div class="factions">
+        <button class="btn-search" id="btnSearch">Search Properties</button>
+        <button class="btn-reset"  id="btnReset">Reset</button>
+        <div class="pills" id="pills" aria-live="polite"></div>
+        <div class="sort-wrap">
+          <span class="sort-label">Sort</span>
+          <select class="sort-sel" id="fSort">
+            <option value="updatedOnDesc">Newest</option>
+            <option value="listPriceDesc">Price ↓</option>
+            <option value="listPriceAsc">Price ↑</option>
+            <option value="bedsDesc">Most Beds</option>
+            <option value="sqftDesc">Largest</option>
+          </select>
+        </div>
+        <span class="rcount" id="rCount"></span>
+        <div class="vtoggle" id="vtoggle">
+          <button class="vbtn active" id="btnList" aria-pressed="true">List</button>
+          <button class="vbtn"        id="btnMap"  aria-pressed="false">Map</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN SPLIT -->
+  <div id="main">
+    <div id="cardsPanel" role="region" aria-label="Property listings">
+      <div class="cards-inner" id="cardsInner"></div>
+    </div>
+    <div id="mapPanel" role="region" aria-label="Property map">
+      <div id="map"></div>
+    </div>
+  </div>
+
+  <button id="scrollTop" aria-label="Back to top">↑</button>
+
+  <script src="config.js"></script>
+  <script src="search.js"></script>
+</body>
+</html>
