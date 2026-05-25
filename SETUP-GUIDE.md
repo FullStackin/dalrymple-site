@@ -5,13 +5,14 @@
 
 ## WHAT YOU HAVE
 
-Three files that make up the entire website:
+The core website now runs without MLS/API search. Main files:
 
 | File       | What it does                                      |
 |------------|---------------------------------------------------|
 | index.html | The structure — all the sections and content      |
 | style.css  | All the colors, fonts, and layout                 |
-| main.js    | Animations, the listings data, contact form logic |
+| main.js    | Animations, manual listings data, contact form logic |
+| search.html | Simple redirect back to featured listings so old links do not break |
 
 ---
 
@@ -213,3 +214,12 @@ Whenever Brianna wants to change listings, prices, or text:
 - Formspree docs: https://help.formspree.io
 
 Good luck, Brianna! 🏡
+
+
+---
+
+## MLS/Search Removed
+
+This version removes the public MLS search link from the header, footer, and featured listings CTA. The home page still uses the manual listings in `main.js`, so you can update active and sold properties without using Repliers, Mapbox, or API keys.
+
+You do not need `config.js`, `config.example.js`, or `search.js` for this no-MLS version.
