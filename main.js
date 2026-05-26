@@ -425,6 +425,11 @@ function initHeroSlideshow() {
     current = (idx + slides.length) % slides.length;
     slides[current].classList.add("active");
     dots[current].classList.add("active");
+    const activeVideo = slides[current].querySelector("video");
+    if (activeVideo) {
+      activeVideo.currentTime = 0;
+      activeVideo.play();
+    }
     setTimeout(() => {
       document
         .querySelectorAll(".rotator-word.exit")
@@ -437,11 +442,11 @@ function initHeroSlideshow() {
     d.addEventListener("click", () => {
       goTo(i);
       clearInterval(timer);
-      timer = setInterval(() => goTo(current + 1), 4200);
+      timer = setInterval(() => goTo(current + 1), 5000);
     }),
   );
 
-  timer = setInterval(() => goTo(current + 1), 4200);
+  timer = setInterval(() => goTo(current + 1), 5000);
 }
 
 /* ══════════════════════════════════════════════════
