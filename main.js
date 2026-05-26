@@ -76,23 +76,53 @@ const soldListings = [
 const testimonials = [
   {
     stars: 5,
-    text: "Brianna's ability to understand what we were looking for was extraordinary. She found us a home that exceeded everything on our list — and negotiated a price we couldn't believe. Truly a cut above.",
-    author: "Michael & Sarah T.",
+    text: "The Dalrymple Team took the extra effort to make our first home purchase successful. They truly listened to what we wanted in a home and found exactly what we were looking for at an amazing price.",
+    author: "The Yang Family",
   },
   {
     stars: 5,
-    text: "Albert's market knowledge is unmatched. We sold our Palo Alto home in four days, above asking. He made the entire process feel completely effortless. Best realtor team in the valley.",
-    author: "Jennifer K.",
+    text: "In all our dealings with Realtors over the past ten years, we have never met a team as helpful, energetic, and professional as the Dalrymple Team. We highly recommend them to anyone looking for experienced Realtors who genuinely care.",
+    author: "Daniel & Barbara Northfield",
   },
   {
     stars: 5,
-    text: "Working with Brianna and Albert was the best decision we made in our home buying journey. Their integrity, speed, and attention to detail are unparalleled in this market.",
-    author: "David & Priya N.",
+    text: "The Dalrymple Team helped make our dream home a reality. We truly appreciated how they went the extra mile to get us the best possible price and guide us through every step of the process.",
+    author: "John & Rhonda Robinson",
   },
   {
     stars: 5,
-    text: "From our first call to closing day, the Dalrymple Team was responsive, strategic, and genuinely caring. They helped us navigate a multiple-offer situation and we came out on top.",
-    author: "Robert & Lisa M.",
+    text: "Thank you to the Dalrymple Team for your patience, professionalism, and attention to detail during the sale of my uncle's home in Palo Alto. Their communication and ability to keep everything moving smoothly made all the difference.",
+    author: "Janet Johnson",
+  },
+  {
+    stars: 5,
+    text: "The Dalrymple Team brought us an offer far higher than what other agents told us we would receive. Their strategy and execution exceeded every expectation.",
+    author: "Richard & Josette",
+  },
+  {
+    stars: 5,
+    text: "The Dalrymple Team found our family the perfect home. They listened carefully to our needs, never pressured us, and made the entire experience enjoyable from start to finish.",
+    author: "Charles & Caroline",
+  },
+  {
+    stars: 5,
+    text: "Having the Dalrymple Team as our Realtors made the whole experience wonderful. We only wish we had met them sooner.",
+    author: "Martin & Betty",
+  },
+  {
+    stars: 5,
+    text: "We made a fabulous choice working with the Dalrymple Team. Our successful home sale happened because of all their hard work, market expertise, and dedication.",
+    author: "Ron & Bernice",
+  },
+  {
+    stars: 5,
+    text: "The property we purchased through the Dalrymple Team was exactly what we were hoping for. Friends and family continue asking us who helped us find such a perfect home.",
+    author: "Camillo & Maria",
+  },
+  {
+    stars: 5,
+    text: "The Dalrymple Team made buying a home so easy for my wife and me. They answered every question patiently and never pushed us toward something we didn't truly want.",
+    author: "Bob & Mindy Lawrence",
   },
 ];
 
